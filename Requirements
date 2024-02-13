@@ -1,0 +1,13 @@
+Requirements
+
+R1. (U1, U4)There will be a way to navigate to a desired lab. 
+R2. (U5)There will be a way to view your progress as you work through each lab.
+R3. (U12)There will be a way to save your progress as you work through each lab.
+R4. (U10)At the end of each lab, there will be a way for the professor to see that you have completed a lab
+R5. (U12)There will be a login/logout function. 
+R6. (U11)There will be a VM available to assist in completing labs and simulating IoT attacks.
+R7. (U3) The interface between the webpage and VM will be seamless and easy to navigate.
+R8. (U5, U4, U7) There will be an integrated environment where all necessary tools and resources will be available.
+R9. (U5, U7) There will be a feedback mechanism so the user understands their performance in each lab.
+R10. (U2, U3, U5, U7) There will be multiple labs encompassing different aspects of IoT security.
+R11. (U3, U5, U6) The interface will be accessible to users on varying operating systems, and web browsers
