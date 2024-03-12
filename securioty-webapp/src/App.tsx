@@ -4,11 +4,12 @@ import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Lab from "./pages/Lab";
 import Profile from "./pages/Profile";
+import "./App.css";
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
   return (
-    <div>
+    <div className="background-color-dark">
       <NavBar></NavBar>
       <BrowserRouter>
         <Routes>
