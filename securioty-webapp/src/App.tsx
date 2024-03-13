@@ -9,7 +9,7 @@ import "./App.css";
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
   return (
-    <div className="background-color-dark">
+    <div className="background-color-dark bg-dark">
       <NavBar></NavBar>
       <BrowserRouter>
         <Routes>
