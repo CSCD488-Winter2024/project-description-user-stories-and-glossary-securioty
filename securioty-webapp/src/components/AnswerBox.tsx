@@ -11,7 +11,7 @@ const AnswerBox = () => {
           id="exampleInputPassword1"
         />
       </div>
-      <button type="submit" className="bg-secondary btn btn-primary">
+      <button type="submit" className="bg-primary btn btn-primary">
         Submit
       </button>
     </form>
