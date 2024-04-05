@@ -4,7 +4,7 @@
 
 ### One-sentence description of the project
 
-This project proposes a web-based virtual machine to train cybersecurity students on practical skills to combat the unique security challenges of the expanding Internet of Things.
+This project proposes a web-based lab platform to train cybersecurity students on practical skills to combat the unique security challenges of the expanding Internet of Things.
 
 ### Additional information about the project
 
