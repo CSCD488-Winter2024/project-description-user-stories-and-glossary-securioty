@@ -13,7 +13,7 @@ SecurIoTy strives to allow cybersecurity students and professionals the ability 
 ### Prerequisites
 
 - Up to date Node.js
-- Up to date Python3
+- Up to date Python 3.12
 
 ### Add-ons
 
@@ -31,8 +31,9 @@ SecurIoTy strives to allow cybersecurity students and professionals the ability 
 0. Have the most recent version of Python3 installed.
 1. Clone this repository
 2. Checkout Flask-Backend-Development
-3. OPTIONAL: Set up a Python virtual environment if desired, more information found here - [venv documentation](https://docs.python.org/3/library/venv.html).
-4. Run `pip install -r requirements.txt`
+3. Navigate to Flask_App directory within the main project
+4. OPTIONAL: Set up a Python virtual environment if desired, more information found here - [venv documentation](https://docs.python.org/3/library/venv.html).
+5. Run `pip install -r requirements.txt` to install required python packages
 
 ## Functionality
 
@@ -47,7 +48,14 @@ There are not any known problems at this early stage in development.
 ## Contributing
 
 TODO: Leave the steps below if you want others to contribute to your project.
+#### Back End Contributing
+- All backend development will be done in the form of modules, and will conform to the PEP-8 standards. 
+- You must ensure that your python environment is configured with the proper packages outlined in requirements.txt. 
+- If you need to install a new pip package for your feature you must run pip freeze > requirements.txt to update requirements as needed. 
+- Proper documentation using [Google's Docstring Format](https://google.github.io/styleguide/pyguide.html) shall be used.
+- Pylint should not be ignored unless it is a special circumstance where there is no other way to solve the problem.
 
+#### Pushing Changes
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
