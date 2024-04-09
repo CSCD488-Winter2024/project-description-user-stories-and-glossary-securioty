@@ -1,4 +1,5 @@
 import React from "react";
+import AccountPopup from "./AccountPopup";
 
 const NavBar = () => {
   return (
@@ -33,11 +34,7 @@ const NavBar = () => {
                   Profile
                 </a>
               </li>
-              <li className="nav-item me-3">
-                <a className="nav-link" href="#">
-                  Login
-                </a>
-              </li>
+              <AccountPopup></AccountPopup>
             </ul>
           </div>
         </div>
