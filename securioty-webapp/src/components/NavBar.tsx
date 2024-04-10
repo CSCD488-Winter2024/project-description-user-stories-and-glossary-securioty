@@ -1,7 +1,14 @@
-import React from "react";
-import AccountPopup from "./AccountPopup";
+import React, { useState } from "react";
+import AccountPopup from "./AccountLoginForm";
+import LoginButton from "./LoginButton";
 
 const NavBar = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  function setLoggedInState(loggedIn: boolean) {
+    setLoggedIn(loggedIn);
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,7 +41,19 @@ const NavBar = () => {
                   Profile
                 </a>
               </li>
-              <AccountPopup></AccountPopup>
+              <LoginButton loggedIn={loggedIn} />
+              <AccountPopup
+                loggedIn={loggedIn}
+                onLoginChange={setLoggedInState}
+              />
+              {loggedIn && (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setLoggedInState(false)}
+                >
+                  Logout
+                </button>
+              )}
             </ul>
           </div>
         </div>

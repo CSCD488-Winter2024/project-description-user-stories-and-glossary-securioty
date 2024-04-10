@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import Popup from "reactjs-popup";
 
-const AccountPopup = () => {
-  const [user, setUser] = useState();
-  const [pass, setPass] = useState();
+interface Props {
+  onLoginChange: (arg0: boolean) => void;
+  loggedIn: boolean;
+}
+
+const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
+  const [user, setUser] = useState<string>();
+  const [pass, setPass] = useState<string>();
 
   const handleUserChange = (event: any) => {
     setUser(event.target.value);
@@ -15,24 +20,27 @@ const AccountPopup = () => {
     console.log(pass);
   };
 
-  // username, password
-
   function onClickLogin() {
     // axios.post(‘api-link/login’, {user, pass})
     console.log("username: " + user);
     console.log("password: " + pass);
+    console.log(loggedIn);
+    if (loggedIn) {
+      onLoginChange(false);
+    }
+    if (user === "billy") {
+      onLoginChange(true);
+    } else {
+      onLoginChange(false);
+    }
+  }
+
+  function onClickLogout() {
+    onLoginChange(false);
   }
 
   return (
     <>
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
-        Login
-      </button>
       <div
         className="modal fade"
         id="exampleModal"
@@ -86,13 +94,24 @@ const AccountPopup = () => {
               >
                 Close
               </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                onClick={onClickLogin}
-              >
-                Submit
-              </button>
+              {!loggedIn && (
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={onClickLogin}
+                >
+                  Submit
+                </button>
+              )}
+              {loggedIn && (
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  onClick={onClickLogout}
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -101,4 +120,4 @@ const AccountPopup = () => {
   );
 };
 
-export default AccountPopup;
+export default AccountLoginForm;
