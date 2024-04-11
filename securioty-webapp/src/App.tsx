@@ -7,10 +7,15 @@ import Profile from "./pages/Profile";
 import "./App.css";
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  function setLoggedInState(loggedIn: boolean) {
+    setLoggedIn(loggedIn);
+  }
+
   return (
     <div className="background-color-dark bg-dark">
-      <NavBar></NavBar>
+      <NavBar loggedIn={loggedIn}
+                onLoginChange={setLoggedInState}></NavBar>
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />

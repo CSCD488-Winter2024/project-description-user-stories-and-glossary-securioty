@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Popup from "reactjs-popup";
 
 interface Props {
   onLoginChange: (arg0: boolean) => void;
@@ -9,6 +8,7 @@ interface Props {
 const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
   const [user, setUser] = useState<string>();
   const [pass, setPass] = useState<string>();
+  const [loginMessage, setLoginMessage] = useState<string>("");
 
   const handleUserChange = (event: any) => {
     setUser(event.target.value);
@@ -25,18 +25,21 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
     console.log("username: " + user);
     console.log("password: " + pass);
     console.log(loggedIn);
-    if (loggedIn) {
-      onLoginChange(false);
-    }
-    if (user === "billy") {
+
+    if (user === "billy@gmail.com") {
       onLoginChange(true);
-    } else {
-      onLoginChange(false);
+      setLoginMessage("Successful login")
+    }
+    else {
+      setLoginMessage("Invalid Credentials, try again")
     }
   }
 
   function onClickLogout() {
     onLoginChange(false);
+    setLoginMessage("Logged out")
+    setUser("")
+    setPass("")
   }
 
   return (
@@ -87,6 +90,12 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
               </form>
             </div>
             <div className="modal-footer">
+              {loginMessage != "" && <button
+                className={"btn btn-dark"}
+                data-bs-dismiss="modal"
+              >
+                {loginMessage}
+              </button>}
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -94,24 +103,13 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
               >
                 Close
               </button>
-              {!loggedIn && (
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={onClickLogin}
-                >
-                  Submit
-                </button>
-              )}
-              {loggedIn && (
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={onClickLogout}
-                >
-                  Logout
-                </button>
-              )}
+              <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={loggedIn? onClickLogout : onClickLogin}
+              >
+                {loggedIn ? "Logout" : "Submit"}
+              </button>
             </div>
           </div>
         </div>

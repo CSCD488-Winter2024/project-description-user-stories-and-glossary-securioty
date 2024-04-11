@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import AccountPopup from "./AccountLoginForm";
 import LoginButton from "./LoginButton";
 
-const NavBar = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+interface Props {
+  onLoginChange: (arg0: boolean) => void;
+  loggedIn: boolean;
+}
+
+const NavBar = ({ onLoginChange, loggedIn }: Props) => {
+  
 
   function setLoggedInState(loggedIn: boolean) {
-    setLoggedIn(loggedIn);
+    onLoginChange(loggedIn);
   }
 
   return (
@@ -32,7 +37,7 @@ const NavBar = () => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
-              <li className="nav-item ml-auto">
+              {loggedIn && <li className="nav-item ml-auto">
                 <a
                   className="nav-link active"
                   aria-current="page"
@@ -40,7 +45,7 @@ const NavBar = () => {
                 >
                   Profile
                 </a>
-              </li>
+              </li>}
               <LoginButton loggedIn={loggedIn} />
               <AccountPopup
                 loggedIn={loggedIn}
