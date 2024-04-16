@@ -1,46 +1,73 @@
 import React, { useState } from "react";
+import accountData from "../scripts/accountData";
 
 interface Props {
   onLoginChange: (arg0: boolean) => void;
   loggedIn: boolean;
+  account: accountData;
+  setAccountCredentials: (arg0: accountData) => void;
+  onClickLogoutSet: () => void;
+  loginMessage: string;
+  setLoginMessagePrompt: (arg0: string) => void;
 }
 
-const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
-  const [user, setUser] = useState<string>();
-  const [pass, setPass] = useState<string>();
-  const [loginMessage, setLoginMessage] = useState<string>("");
+const AccountLoginForm = ({
+  onLoginChange,
+  loggedIn,
+  account,
+  setAccountCredentials,
+  onClickLogoutSet,
+  setLoginMessagePrompt,
+  loginMessage,
+}: Props) => {
+  const [registrationStatus, setRegistrationStatus] = useState<boolean>(false);
 
-  const handleUserChange = (event: any) => {
-    setUser(event.target.value);
-    console.log(user);
-  };
-
-  const handlePassChange = (event: any) => {
-    setPass(event.target.value);
-    console.log(pass);
-  };
-
-  function onClickLogin() {
-    // axios.post(‘api-link/login’, {user, pass})
-    console.log("username: " + user);
-    console.log("password: " + pass);
-    console.log(loggedIn);
-
-    if (user === "billy@gmail.com") {
-      onLoginChange(true);
-      setLoginMessage("Successful login")
-    }
-    else {
-      setLoginMessage("Invalid Credentials, try again")
+  function onClickSubmit() {
+    if (registrationStatus) {
+      // axios.post('api-link/register'), {user, pass, first, last, role})
+      if (account.username != "exists") {
+        setLoginMessagePrompt("Account Created!");
+        onLoginChange(true);
+        setRegistrationStatus(false);
+      } else {
+        setLoginMessagePrompt("Email already exists");
+      }
+    } else {
+      // axios.post(‘api-link/login’, {user, pass})
+      if (account.username === "exists") {
+        onLoginChange(true);
+        setLoginMessagePrompt("Successful login");
+      } else {
+        setLoginMessagePrompt("Invalid Credentials, try again");
+      }
     }
   }
 
   function onClickLogout() {
-    onLoginChange(false);
-    setLoginMessage("Logged out")
-    setUser("")
-    setPass("")
+    setLoginMessagePrompt("");
+    onClickLogoutSet();
   }
+
+  function onClickRegistration() {
+    setRegistrationStatus(!registrationStatus);
+  }
+
+  const handleUserChange = (event: any) => {
+    setAccountCredentials({ ...account, username: event.target.value });
+  };
+
+  const handlePassChange = (event: any) => {
+    setAccountCredentials({ ...account, password: event.target.value });
+  };
+  const handleFirstChange = (event: any) => {
+    setAccountCredentials({ ...account, firstname: event.target.value });
+  };
+  const handleLastChange = (event: any) => {
+    setAccountCredentials({ ...account, lastname: event.target.value });
+  };
+  const handleRoleChange = (event: any) => {
+    setAccountCredentials({ ...account, role: event.target.value });
+  };
 
   return (
     <>
@@ -54,7 +81,7 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Login
+                {registrationStatus ? "Create Account" : "Login"}
               </h1>
               <button
                 type="button"
@@ -71,7 +98,7 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
                     <input
                       type="email"
                       className="form-control"
-                      value={user}
+                      value={account.username}
                       onChange={handleUserChange}
                     ></input>
                   </div>
@@ -82,20 +109,60 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
                     <input
                       type="password"
                       className="form-control"
-                      value={pass}
+                      value={account.password}
                       onChange={handlePassChange}
                     ></input>
                   </div>
                 </div>
+                {registrationStatus && (
+                  <div>
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        First Name
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          className="form-control"
+                          value={account.firstname}
+                          onChange={handleFirstChange}
+                        ></input>
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <label className="col-sm-2 col-form-label">
+                        Last Name
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          className="form-control"
+                          value={account.lastname}
+                          onChange={handleLastChange}
+                        ></input>
+                      </div>
+                    </div>
+
+                    <div className="row mb-3">
+                      <div>
+                        <select
+                          className="form-select"
+                          aria-label="Default select example"
+                          onChange={handleRoleChange}
+                        >
+                          <option selected>Role</option>
+                          <option value="Student" onClick={handleRoleChange}>
+                            Student
+                          </option>
+                          <option value="Instructor">Instructor</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {loginMessage != "" && <p>{loginMessage}</p>}
               </form>
             </div>
             <div className="modal-footer">
-              {loginMessage != "" && <button
-                className={"btn btn-dark"}
-                data-bs-dismiss="modal"
-              >
-                {loginMessage}
-              </button>}
               <button
                 type="button"
                 className="btn btn-secondary"
@@ -103,10 +170,19 @@ const AccountLoginForm = ({ onLoginChange, loggedIn }: Props) => {
               >
                 Close
               </button>
+              {!loggedIn && (
+                <button
+                  className={"btn btn-dark"}
+                  onClick={onClickRegistration}
+                >
+                  {registrationStatus ? "Login" : "Create Account"}
+                </button>
+              )}
+
               <button
                 type="submit"
                 className="btn btn-primary"
-                onClick={loggedIn? onClickLogout : onClickLogin}
+                onClick={loggedIn ? onClickLogout : onClickSubmit}
               >
                 {loggedIn ? "Logout" : "Submit"}
               </button>

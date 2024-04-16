@@ -14,7 +14,7 @@ const LoginButton = ({ loggedIn }: Props) => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
-          {loggedIn ? "Logout" : "Login"}
+          {loggedIn ? "Logout" : "Login/Register"}
         </button>
       )}
     </>
