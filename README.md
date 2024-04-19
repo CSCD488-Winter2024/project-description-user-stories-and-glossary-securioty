@@ -35,6 +35,7 @@ SecurIoTy strives to allow cybersecurity students and professionals the ability 
 4. OPTIONAL: Set up a Python virtual environment if desired, more information found here - [venv documentation](https://docs.python.org/3/library/venv.html).
 5. Run `pip install -r requirements.txt` to install required python packages
 
+
 ## Functionality
 
 Currently our functionality does not extend past a basic UI.
@@ -48,6 +49,7 @@ There are not any known problems at this early stage in development.
 ## Contributing
 
 TODO: Leave the steps below if you want others to contribute to your project.
+
 #### Back End Contributing
 - All backend development will be done in the form of modules, and will conform to the PEP-8 standards. 
 - You must ensure that your python environment is configured with the proper packages outlined in requirements.txt. 
@@ -63,5 +65,5 @@ TODO: Leave the steps below if you want others to contribute to your project.
 5. Submit a pull request :D
 
 ## Additional Documentation
-
 No additional documentation at this early stage of development.
+
