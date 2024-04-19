@@ -65,5 +65,14 @@ TODO: Leave the steps below if you want others to contribute to your project.
 5. Submit a pull request :D
 
 ## Additional Documentation
-No additional documentation at this early stage of development.
 
+### Backend Testing
+- In order to set up a functional testing environment for the API a few things must be done. First it is **HIGHLY** 
+recommended to set up a virtual environment in Python in order to keep your package environment clean. Setting up
+a virtual environment will save headaches with package versioning for this project and any future Python projects.
+More information can be found [here](https://docs.python.org/3/library/venv.html). </br></br>
+- Once all steps have been completed from the Backend Contributing list two environment variables must be set.
+  - FLASK_APP needs to be set to 'run.py'
+  - FLASK_CONFIG needs to be set to 'testing' </br></br>
+- With the environment variables set you can simply run `flask run` in your terminal. The terminal will output which
+port is being used for testing.
