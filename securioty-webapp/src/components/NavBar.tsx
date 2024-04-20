@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AccountPopup from "./AccountLoginForm";
 import LoginButton from "./LoginButton";
 import accountData from "../scripts/accountData";
@@ -9,14 +9,19 @@ interface Props {
 }
 
 const NavBar = ({ onLoginChange, loggedIn }: Props) => {
-  const [account, setAccount] = useState<accountData>({
-    username: "",
-    password: "",
-    firstname: "",
-    lastname: "",
-    role: "",
+  const [account, setAccount] = useState<accountData>(() => {
+    const localValue = localStorage.getItem("ACCOUNT");
+    if (localValue == null) {
+      return [];
+    } else {
+      return JSON.parse(localValue);
+    }
   });
   const [loginMessage, setLoginMessage] = useState<string>("");
+
+  useEffect(() => {
+    localStorage.setItem("ACCOUNT", JSON.stringify(account));
+  }, [account]);
 
   function setLoggedInState(loggedIn: boolean) {
     onLoginChange(loggedIn);

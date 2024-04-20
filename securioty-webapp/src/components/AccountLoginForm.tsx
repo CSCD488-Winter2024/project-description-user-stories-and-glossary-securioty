@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import accountData from "../scripts/accountData";
+import axios from "axios";
 
 interface Props {
   onLoginChange: (arg0: boolean) => void;
@@ -24,22 +25,43 @@ const AccountLoginForm = ({
 
   function onClickSubmit() {
     if (registrationStatus) {
-      // axios.post('api-link/register'), {user, pass, first, last, role})
-      if (account.username != "exists") {
-        setLoginMessagePrompt("Account Created!");
-        onLoginChange(true);
-        setRegistrationStatus(false);
-      } else {
-        setLoginMessagePrompt("Email already exists");
-      }
+      axios
+        .post("http://127.0.0.1:5000/auth/register", {
+          email: account.username,
+          password: account.password,
+          first: account.firstname,
+          last: account.lastname,
+          role: account.role,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.status === 201) {
+            setLoginMessagePrompt("Account Created! You are now logged in.");
+            onLoginChange(true);
+            setRegistrationStatus(false);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setLoginMessagePrompt("Email already exists");
+        });
     } else {
-      // axios.post(‘api-link/login’, {user, pass})
-      if (account.username === "exists") {
-        onLoginChange(true);
-        setLoginMessagePrompt("Successful login");
-      } else {
-        setLoginMessagePrompt("Invalid Credentials, try again");
-      }
+      axios
+        .post("http://127.0.0.1:5000/auth/login", {
+          email: account.username,
+          password: account.password,
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.status === 200) {
+            onLoginChange(true);
+            setLoginMessagePrompt("Successful login!");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+          setLoginMessagePrompt("Invalid Credentials, try again");
+        });
     }
   }
 
@@ -150,10 +172,11 @@ const AccountLoginForm = ({
                           onChange={handleRoleChange}
                         >
                           <option selected>Role</option>
-                          <option value="Student" onClick={handleRoleChange}>
+                          <option value="STUDENT" onClick={handleRoleChange}>
                             Student
                           </option>
-                          <option value="Instructor">Instructor</option>
+                          <option value="INSTRUCTOR">Instructor</option>
+                          <option value="ADMIN">Admin</option>
                         </select>
                       </div>
                     </div>
