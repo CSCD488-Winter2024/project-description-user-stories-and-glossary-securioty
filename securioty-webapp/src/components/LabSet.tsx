@@ -3,17 +3,32 @@ import Card from "./LabCard";
 
 const LabSet = () => {
 
-  const initialLabArray = [
-    { id: 1, title: 'Lab 1', description: 'Description for Lab 1' },
-    { id: 2, title: 'Lab 2', description: 'Description for Lab 2' },
-    { id: 3, title: 'Lab 3', description: 'Description for Lab 3' },
-    { id: 4, title: 'Lab 4', description: 'Description for Lab 4' },
-    { id: 5, title: 'Lab 5', description: 'Description for Lab 5' },
-    { id: 6, title: 'Lab 6', description: 'Description for Lab 6' },
+  const Labs = [
+    {
+      id: 1,
+      title: 'Lab 1',
+      description: 'Description for Lab 1',
+      questions: [
+        { id: 1, title: 'Question 1', description: 'Description for Lab 1 Question 1' },
+        { id: 2, title: 'Question 2', description: 'Description for Lab 1 Question 2' },
+        { id: 3, title: 'Question 3', description: 'Description for Lab 1 Question 3' },
+
+      ]
+    },
+    {
+      id: 2,
+      title: 'Lab 2',
+      description: 'Description for Lab 2',
+      questions: [
+        { id: 1, title: 'Question 1', description: 'Description for Lab 2 Question 1' },
+        { id: 2, title: 'Question 2', description: 'Description for Lab 2 Question 2' },
+      ]
+    },
   ];
   
 
-  const[labArray, setLabArray] = useState(initialLabArray)
+  const[labArray, setLabArray] = useState(Labs)
+
 
   return (
     <>
@@ -23,7 +38,7 @@ const LabSet = () => {
           {labArray.map(lab => {
             return(
             <div className="p-4" key={lab.id}>
-            <Card title={lab.title}>
+            <Card labItem={lab}>
               {lab.description}
             </Card>
           </div>

@@ -1,12 +1,19 @@
 import React, { FormEvent, useState } from "react";
 
-const AnswerBox = () => {
+interface Props{
+  labID: number
+  questionID: number
+}
+
+const AnswerBox = ({labID, questionID}:Props)=> {
   const [answer, setAnswer] = useState("")
   const [answerFeedback, setAnswerFeedback] = useState("")
 
+  labID
   function handleAnswer(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     
+    // axios.post('api-link/answer'), {labID, questionID})
     if (answer === "flag") {
       setAnswerFeedback("Correct!");
     } else {
