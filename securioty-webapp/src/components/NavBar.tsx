@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AccountPopup from "./AccountLoginForm";
 import LoginButton from "./LoginButton";
 import accountData from "../scripts/accountData";

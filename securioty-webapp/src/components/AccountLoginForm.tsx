@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import accountData from "../scripts/accountData";
 import axios from "axios";
 
