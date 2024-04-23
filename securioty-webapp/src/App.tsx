@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
@@ -7,15 +7,25 @@ import Profile from "./pages/Profile";
 import "./App.css";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(() => {
+    const localValue = localStorage.getItem("LOGGEDIN");
+    if (localValue == null) {
+      return false;
+    } else {
+      return JSON.parse(localValue);
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("LOGGEDIN", JSON.stringify(loggedIn));
+  }, [loggedIn]);
   function setLoggedInState(loggedIn: boolean) {
     setLoggedIn(loggedIn);
   }
 
   return (
     <div className="background-color-dark bg-dark">
-      <NavBar loggedIn={loggedIn}
-                onLoginChange={setLoggedInState}></NavBar>
+      <NavBar loggedIn={loggedIn} onLoginChange={setLoggedInState}></NavBar>
       <BrowserRouter>
         <Routes>
           <Route index element={<Home />} />
