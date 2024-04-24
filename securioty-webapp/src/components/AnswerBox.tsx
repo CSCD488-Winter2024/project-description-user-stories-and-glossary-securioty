@@ -3,9 +3,10 @@ import React, { FormEvent, useState } from "react";
 interface Props{
   labID: number
   questionID: number
+  setProgress: React.Dispatch<React.SetStateAction<number>>
 }
 
-const AnswerBox = ({labID, questionID}:Props)=> {
+const AnswerBox = ({labID, questionID, setProgress}:Props)=> {
   const [answer, setAnswer] = useState("")
   const [answerFeedback, setAnswerFeedback] = useState("")
 
@@ -16,6 +17,7 @@ const AnswerBox = ({labID, questionID}:Props)=> {
     // axios.post('api-link/answer'), {labID, questionID})
     if (answer === "flag") {
       setAnswerFeedback("Correct!");
+      setProgress(prevProgress => prevProgress + 10);
     } else {
       setAnswerFeedback("Incorrect. Try again.");
     }

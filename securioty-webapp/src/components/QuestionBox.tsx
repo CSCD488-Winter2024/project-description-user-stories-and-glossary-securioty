@@ -10,11 +10,12 @@ interface Question {
 interface Props {
     question: Question
     labID: number
+    setProgress: React.Dispatch<React.SetStateAction<number>>
 }
 
 
 
-const QuestionBox = ({ question, labID }: Props) => {
+const QuestionBox = ({ question, labID, setProgress }: Props) => {
 
     return (
         <div className="accordion-item">
@@ -37,7 +38,7 @@ const QuestionBox = ({ question, labID }: Props) => {
             data-bs-parent="#accordionExample"
           >
             <div className="accordion-body">{question.description}</div>
-            <AnswerBox labID = {labID} questionID = {question.id}></AnswerBox>
+            <AnswerBox labID = {labID} questionID = {question.id} setProgress={setProgress}></AnswerBox>
           </div>
         </div>
       );
