@@ -16,7 +16,7 @@ def register():
     first = request.json.get('first')
     last = request.json.get('last')
     role = request.json.get('role')
-    user = User(Email=email, First=first, Last=last, Role=role)
+    user = User(email=email, first=first, last=last, role=role)
     user.set_password(password)
     db.session.add(user)
     db.session.commit()
@@ -28,7 +28,7 @@ def login():
     """Login a user via POST request. Returns token."""
     email = request.json.get('email')
     password = request.json.get('password')
-    user = User.query.filter_by(Email=email).first()
+    user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
         access_token = create_access_token(identity=email)
         return jsonify(access_token=access_token), 200
