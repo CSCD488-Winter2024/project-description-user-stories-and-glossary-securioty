@@ -1,5 +1,3 @@
-import React from "react";
-import AnswerBox from "./AnswerBox";
 import QuestionBox from "./QuestionBox";
 
 interface LabItem {
@@ -14,23 +12,21 @@ interface Props {
 }
 
 const ActiveLab = ({ labItem }: Props) => {
-
-
   return (
     <>
       <body>
-        <h1>{labItem.title}</h1>
+        <h1 className="display-3 text-primary text-center bg-dark">
+          {labItem.title}
+        </h1>
       </body>
       <div
-          className="d-inline-block accordion w-50 px-2 py-2"
-          id="accordionExample"
-        >
-
-      {labItem.questions.map(question => (
-          <QuestionBox labID = {labItem.id} question={question} />
+        className="d-inline-block accordion w-50 px-2 py-2"
+        id="accordionExample"
+      >
+        {labItem.questions.map((question) => (
+          <QuestionBox labID={labItem.id} question={question} />
         ))}
       </div>
-       
     </>
   );
 };

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Lab from "./pages/Lab";
 import Profile from "./pages/Profile";
 import "./App.css";
+import LabCreation from "./pages/LabCreation";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(() => {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/lab" element={<Lab />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/labcreation" element={<LabCreation />} />
         </Routes>
       </BrowserRouter>
     </div>

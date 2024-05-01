@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import AccountPopup from "./AccountLoginForm";
+import AccountPopup from "./AccountForm";
 import LoginButton from "./LoginButton";
 import accountData from "../scripts/accountData";
 
@@ -75,6 +75,15 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
                   </a>
                 </li>
               )}
+              <li className="nav-item ml-auto">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/labcreation"
+                >
+                  CreateLab
+                </a>
+              </li>
               <LoginButton loggedIn={loggedIn} />
               <AccountPopup
                 onClickLogoutSet={onClickLogout}

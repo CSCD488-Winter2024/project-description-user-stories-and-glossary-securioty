@@ -12,7 +12,7 @@ interface Props {
   setLoginMessagePrompt: (arg0: string) => void;
 }
 
-const AccountLoginForm = ({
+const AccountForm = ({
   onLoginChange,
   loggedIn,
   account,
@@ -217,4 +217,4 @@ const AccountLoginForm = ({
   );
 };
 
-export default AccountLoginForm;
+export default AccountForm;

@@ -1,8 +1,7 @@
-import React from "react";
-import LabSet from "../components/LabSet";
+import HomeExplorer from "../components/HomeExplorer";
 
 const Home = () => {
-  return <LabSet></LabSet>;
+  return <HomeExplorer></HomeExplorer>;
 };
 
 export default Home;
