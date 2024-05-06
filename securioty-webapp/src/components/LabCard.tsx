@@ -20,6 +20,17 @@ interface Props {
 
 const LabCard = ({ children, labItem }: Props) => {
 
+  //Commented out code so I can code without backend setup
+
+  /*
+  const [account, setAccount] = useState<accountData>({
+    username: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    role: ''
+  });
+  */
   const [account, setAccount] = useState<accountData>(() => {
     const localValue = localStorage.getItem("ACCOUNT");
     if (localValue == null) {
