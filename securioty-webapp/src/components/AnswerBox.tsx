@@ -1,25 +1,53 @@
+import axios from "axios";
 import React, { FormEvent, useState } from "react";
+import accountData from "../scripts/accountData";
 
-interface Props{
+interface Props {
   labID: number
   questionID: number
+  setProgress: React.Dispatch<React.SetStateAction<number>>
 }
 
-const AnswerBox = ({labID, questionID}:Props)=> {
+const AnswerBox = ({ labID, questionID, setProgress }: Props) => {
   const [answer, setAnswer] = useState("")
   const [answerFeedback, setAnswerFeedback] = useState("")
 
-  labID
+  const [account, setAccount] = useState<accountData>(() => {
+    const localValue = localStorage.getItem("ACCOUNT");
+    if (localValue == null) {
+      return [];
+    } else {
+      return JSON.parse(localValue);
+    }
+  });
+
   function handleAnswer(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
-    // axios.post('api-link/answer'), {labID, questionID})
-    if (answer === "flag") {
-      setAnswerFeedback("Correct!");
-    } else {
-      setAnswerFeedback("Incorrect. Try again.");
-    }
-}
+
+
+    //AnswerBox.tsx, runs when user hits "Submit" button in lab
+    axios
+      .post("http://127.0.0.1:5000/Check_Answer", {
+        answer: answer,
+        LabID: labID,
+        QuestionID: questionID,
+        UserID: account
+      })
+      .then(function (response) {
+        const responseData = response.data;
+        const success = responseData[0];
+        const progress = responseData[1];
+
+        if (success) {
+          setAnswerFeedback("Correct!");
+          setProgress(progress);
+        } else {
+          setAnswerFeedback("Incorrect. Try again.");
+        }
+
+      })
+
+  }
 
 
   return (
@@ -27,7 +55,7 @@ const AnswerBox = ({labID, questionID}:Props)=> {
       <div className="mb-3">
         <label className="form-label">Answer</label>
         <input
-          value = {answer}
+          value={answer}
           onChange={e => setAnswer(e.target.value)}
           type="text"
           className="form-control"
@@ -38,7 +66,7 @@ const AnswerBox = ({labID, questionID}:Props)=> {
       </div>
       <button type="submit" className="bg-primary btn btn-primary">
         Submit
-        
+
       </button>
     </form>
   );
