@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import ProgressDisplay from '../components/GradeDisplay';
 
 const InstructorPage = () => {
+    return(
+        <ProgressDisplay></ProgressDisplay>
+    )
+    /*
     const [filtersApplied, setFiltersApplied] = useState(false);
     const [courseCode, setCourseCode] = useState('');
     const [schoolYear, setSchoolYear] = useState('');
@@ -18,7 +23,7 @@ const InstructorPage = () => {
         localStorage.removeItem('courseCode');
         localStorage.removeItem('schoolYear');
         localStorage.removeItem('labId');
-    */
+    
 
     useEffect(() => {
         const storedCourseCode = localStorage.getItem('courseCode');
@@ -137,7 +142,7 @@ const InstructorPage = () => {
                 )}
             </div>
         </div>
-    );
+    );*/
 }
 
 export default InstructorPage;
