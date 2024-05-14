@@ -25,26 +25,26 @@ const LabSet = () => {
       ]
     },
   ];
-  
 
-  const[labArray, setLabArray] = useState(Labs)
+
+  const [labArray, setLabArray] = useState(Labs)
 
 
   return (
     <>
       <div className="container text-center overflow-hidden px-4">
         <div className="row row-cols-3 gx-5 pt-5">
-          
+
           {labArray.map(lab => {
-            return(
-            <div className="p-4" key={lab.id}>
-            <Card labItem={lab}>
-              {lab.description}
-            </Card>
-          </div>
-          )
+            return (
+              <div className="p-4" key={lab.id}>
+                <Card labItem={lab}>
+                  {lab.description}
+                </Card>
+              </div>
+            )
           })}
-           
+
         </div>
       </div>
     </>
