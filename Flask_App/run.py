@@ -1,8 +1,7 @@
-"""Driver file which creates the app based on passed in configs"""
+"""This is the main entry point for the Flask app."""
 import os
 from .app import create_app
 
-# Defaults to dev if not given specific config
 config_name = os.getenv('FLASK_CONFIG', 'development')
 app = create_app(config_name)
 

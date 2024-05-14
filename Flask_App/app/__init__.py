@@ -1,4 +1,9 @@
-"""Creates the Flask app with all necessary configurations and blueprints"""
+"""
+Application factory for the Flask application.
+
+This module contains the application factory function that initializes the Flask
+application with the necessary configurations, extensions, and blueprints.
+"""
 from flask import Flask
 from flask_cors import CORS
 from .extensions import db, bcrypt, jwt, migrate
@@ -8,6 +13,11 @@ from .labs.models import Labs, Question
 
 
 def create_app(config_name):
+    """Create and configure an instance of the Flask application.
+
+    Returns:
+        Flask: The Flask application instance.
+    """
     app = Flask(__name__)
     app.config.from_object(config_dict[config_name])
 
@@ -31,12 +41,16 @@ def create_app(config_name):
 
                 questions = [
                     Question(
-                        question='Who is the best dog in the world?',
+                        id=1,
+                        title='Who is the best dog in the world?',
+                        description='This question, obviously asks who the best dog in the world is.',
                         answer='Maggie',
                         lab_id=dummy_lab.id
                     ),
                     Question(
-                        question='Is Python fun?',
+                        id=2,
+                        title='Is Python fun?',
+                        description='This question asks if programming is fun.',
                         answer='Sometimes',
                         lab_id=dummy_lab.id
                     )
