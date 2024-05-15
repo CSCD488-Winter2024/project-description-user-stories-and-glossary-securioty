@@ -23,6 +23,8 @@ const AccountLoginForm = ({
 }: Props) => {
   const [registrationStatus, setRegistrationStatus] = useState<boolean>(false);
 
+  //Triggered when submit button is pressed within login form
+  //Calls the register endpoint if registrationStatus is True, otherwise calls Login endpoint
   function onClickSubmit() {
     if (registrationStatus) {
       axios
@@ -56,6 +58,10 @@ const AccountLoginForm = ({
           if (response.status === 200) {
             onLoginChange(true);
             setLoginMessagePrompt("Successful login!");
+            localStorage.setItem(
+              "ACCOUNT",
+              JSON.stringify({ ...account, token: response.data })
+            );
           }
         })
         .catch(function (error) {
@@ -74,10 +80,10 @@ const AccountLoginForm = ({
     setRegistrationStatus(!registrationStatus);
   }
 
+  //Handling state change
   const handleUserChange = (event: any) => {
     setAccountCredentials({ ...account, username: event.target.value });
   };
-
   const handlePassChange = (event: any) => {
     setAccountCredentials({ ...account, password: event.target.value });
   };
@@ -90,6 +96,7 @@ const AccountLoginForm = ({
   const handleRoleChange = (event: any) => {
     setAccountCredentials({ ...account, role: event.target.value });
   };
+  //End state change handling --------------------------------
 
   return (
     <>

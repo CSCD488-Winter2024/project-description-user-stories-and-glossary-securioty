@@ -2,24 +2,14 @@ import React, { ReactNode, useState } from "react";
 import AccountPopup from "./AccountLoginForm";
 import LoginButton from "./LoginButton";
 import accountData from "../scripts/accountData";
-
-interface LabItem {
-  id: number;
-  title: string;
-  description: string;
-  questions: { id: number; title: string; description: string }[];
-}
+import lab from "../scripts/lab";
 
 interface Props {
   children: ReactNode;
-  labItem: LabItem;
+  labItem: lab;
 }
 
-
-
-
 const LabCard = ({ children, labItem }: Props) => {
-
   //Commented out code so I can code without backend setup
 
   /*
@@ -39,11 +29,11 @@ const LabCard = ({ children, labItem }: Props) => {
       return JSON.parse(localValue);
     }
   });
-  
-  const handleLabClick = () => {
 
-      localStorage.setItem('currentLab', JSON.stringify(labItem));
-      window.location.href = '/lab';
+  const handleLabClick = () => {
+    localStorage.setItem("currentLab", JSON.stringify(labItem));
+    console.log(labItem);
+    window.location.href = "/lab";
   };
 
   return (
@@ -58,18 +48,18 @@ const LabCard = ({ children, labItem }: Props) => {
             </button>
           ) : (
             <button
-                  type="button"
-                  className="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                >
-                  Login to Start Learning!
-                </button>
+              type="button"
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              Login to Start Learning!
+            </button>
           )}
         </div>
       </div>
     </>
   );
-}
+};
 
 export default LabCard;
