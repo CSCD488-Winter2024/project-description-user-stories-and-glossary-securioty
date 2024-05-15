@@ -37,28 +37,6 @@ def get_labs():
         return jsonify(labs_list)
 
 
-@labs.route('/get_progress', methods=['GET'])
-@jwt_required()
-def get_lab_progress():
-    """Get user progress for all labs.
-
-    Returns:
-        JSON: A JSON response containing the lab progress.
-    """
-    user_id = get_jwt_identity()
-    progress = UserProgress.query.filter_by(user_id=user_id).all()
-    progress_list = [
-        {
-            'lab_id': p.lab_id,
-            'question_id': p.question_id,
-            'answer': p.answer,
-            'is_correct': p.is_correct,
-            'timestamp': p.timestamp
-        } for p in progress
-    ]
-    return jsonify(progress_list)
-
-
 @labs.route('/update_progress', methods=['POST'])
 @jwt_required()
 def update_progress():
@@ -97,17 +75,25 @@ def update_progress():
 @labs.route('/get_progress_percentage/<int:lab_id>', methods=['GET'])
 @jwt_required()
 def get_progress_percentage(lab_id):
-    """Get the user's progress percentage for a specific lab id.
+    """Get the user's progress percentage for a specific lab id and the IDs of completed questions.
 
     Returns:
-        JSON: A JSON response containing the lab progress percentage.
+        JSON: A JSON response containing the lab progress percentage and completed question IDs.
     """
     user_id = get_jwt_identity()
     total_questions = Question.query.filter_by(lab_id=lab_id).count()
 
-    correct_answers = UserProgress.query.filter_by(user_id=user_id, lab_id=lab_id, is_correct=True).count()
-    progress_percentage = (correct_answers / total_questions) * 100
-    return jsonify({'progress_percentage': progress_percentage})
+    completed_questions = UserProgress.query.filter_by(user_id=user_id, lab_id=lab_id, is_correct=True).all()
+    correct_answers = len(completed_questions)
+    completed_question_ids = [progress.question_id for progress in completed_questions]
+
+    progress_percentage = (correct_answers / total_questions) * 100 if total_questions > 0 else 0
+
+    return jsonify({
+        'progress_percentage': progress_percentage,
+        'completed_question_ids': completed_question_ids
+    })
+
 
 @labs.route('/create_lab', methods=['POST'])
 @jwt_required()

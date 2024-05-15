@@ -3,7 +3,7 @@ import pytest
 
 from .. import create_app, db
 from ..auth.models import User
-from ..labs.models import Labs, Question
+from ..labs.models import Labs, Question, UserProgress
 
 
 @pytest.fixture
@@ -82,3 +82,19 @@ def test_create_lab_invalid_questions_format(client):
     data = response.get_json()
     assert response.status_code == 400
     assert 'errors' in data
+
+def test_get_progress_percentage(client):
+    """Tests retrieving the progress percentage and completed question IDs for a lab."""
+    access_token = get_access_token(client, 'Test@gmail.com', 'TEST1234')
+
+    # Get progress percentage
+    response = client.get('/labs/get_progress_percentage/1', headers={'Authorization': f'Bearer {access_token}'})
+    data = response.get_json()
+
+    assert response.status_code == 200
+    assert 'progress_percentage' in data
+    assert 'completed_question_ids' in data
+    assert data['progress_percentage'] == 100
+    assert set(data['completed_question_ids']) == {1, 2}
+
+
