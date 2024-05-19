@@ -1,6 +1,5 @@
-import React, { ReactNode, useState } from "react";
-import AccountPopup from "./AccountLoginForm";
-import LoginButton from "./LoginButton";
+import { ReactNode, useState } from "react";
+
 import accountData from "../scripts/accountData";
 import lab from "../scripts/lab";
 
@@ -10,17 +9,6 @@ interface Props {
 }
 
 const LabCard = ({ children, labItem }: Props) => {
-  //Commented out code so I can code without backend setup
-
-  /*
-  const [account, setAccount] = useState<accountData>({
-    username: '',
-    password: '',
-    firstname: '',
-    lastname: '',
-    role: ''
-  });
-  */
   const [account, setAccount] = useState<accountData>(() => {
     const localValue = localStorage.getItem("ACCOUNT");
     if (localValue == null) {
@@ -33,7 +21,7 @@ const LabCard = ({ children, labItem }: Props) => {
   const handleLabClick = () => {
     localStorage.setItem("currentLab", JSON.stringify(labItem));
     console.log(labItem);
-    window.location.href = "/lab";
+    window.location.href = "/takinglab";
   };
 
   return (
@@ -42,7 +30,7 @@ const LabCard = ({ children, labItem }: Props) => {
         <div className="card-body">
           <h5 className="card-title">{labItem.title}</h5>
           <p className="card-text">{children}</p>
-          {Object.keys(account).length > 0 ? (
+          {account.token != "" ? (
             <button onClick={handleLabClick} className="btn btn-primary">
               Start Learning!
             </button>

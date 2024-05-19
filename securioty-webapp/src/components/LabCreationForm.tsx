@@ -15,13 +15,11 @@ const LabCreationForm = () => {
   //Dynamically adds a new question field
   const addQuestion = () => {
     setQuestionCount(questionCount + 1);
-    console.log(questionCount);
     const newQuestions = [
       ...newLab.questions,
       { id: questionCount, title: "", description: "", answer: "" },
     ];
     setNewLab({ ...newLab, questions: newQuestions });
-    console.log(newLab);
   };
 
   //Triggered when the "Remove Question" button is clicked
@@ -32,23 +30,18 @@ const LabCreationForm = () => {
     } else {
       return;
     }
-    console.log(questionCount);
     const newQuestions = [...newLab.questions];
     newQuestions.pop();
-    console.log(newQuestions);
 
     setNewLab({ ...newLab, questions: newQuestions });
-    console.log(newLab);
   };
 
   //Field updating so state is stored properly
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewLab({ ...newLab, title: e.target.value });
-    console.log(newLab);
   };
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewLab({ ...newLab, description: e.target.value });
-    console.log(newLab);
   };
   const handleQuestionChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -65,7 +58,6 @@ const LabCreationForm = () => {
       }
     });
     setNewLab({ ...newLab, questions: newQuestions });
-    console.log(newLab);
   };
   // End field updating -----------------------------------------------------
 
@@ -74,12 +66,10 @@ const LabCreationForm = () => {
   const submitLab = () => {
     const accountData = localStorage.getItem("ACCOUNT");
     const account = accountData !== null ? JSON.parse(accountData) : "";
-    console.log(account.token.access_token);
     const h = { Authorization: `Bearer ${account.token.access_token}` };
     axios
-      .post("http://127.0.0.1:5000/labs/create_lab", newLab, { headers: h })
+      .post("/labs/create_lab", newLab, { headers: h })
       .then(function (response) {
-        console.log(response);
         if (response.status === 201) {
           alert("Successfully created!");
           setNewLab({

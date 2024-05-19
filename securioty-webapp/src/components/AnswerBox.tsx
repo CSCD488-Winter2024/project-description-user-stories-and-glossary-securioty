@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
-import accountData from "../scripts/accountData";
 
 interface Props {
   labID: number;
@@ -12,26 +11,21 @@ const AnswerBox = ({ labID, questionID, setProgress }: Props) => {
   const [answer, setAnswer] = useState("");
   const [answerFeedback, setAnswerFeedback] = useState("");
 
-  const [account, setAccount] = useState<accountData>(() => {
-    const localValue = localStorage.getItem("ACCOUNT");
-    if (localValue == null) {
-      return [];
-    } else {
-      return JSON.parse(localValue);
-    }
-  });
-
   function handleAnswer(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     //AnswerBox.tsx, runs when user hits "Submit" button in lab
     const accountData = localStorage.getItem("ACCOUNT");
     const account = accountData !== null ? JSON.parse(accountData) : "";
-    //console.log(account);
     const h = { Authorization: `Bearer ${account.token.access_token}` };
+    console.log({
+      lab_id: labID,
+      question_id: questionID,
+      answer: answer,
+    });
     axios
       .post(
-        "http://127.0.0.1:5000/update_progress",
+        "/labs/update_progress",
         {
           lab_id: labID,
           question_id: questionID,
@@ -41,16 +35,26 @@ const AnswerBox = ({ labID, questionID, setProgress }: Props) => {
       )
       .then(function (response) {
         const responseData = response.data;
-        console.log(responseData);
-        const success = responseData[0];
-        const progress = responseData[1];
+        const success: boolean = responseData.is_correct;
 
         if (success) {
           setAnswerFeedback("Correct!");
-          setProgress(progress);
         } else {
           setAnswerFeedback("Incorrect. Try again.");
         }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    axios
+      .get(
+        "/labs/get_progress_percentage/" + labID,
+
+        { headers: h }
+      )
+      .then(function (response) {
+        setProgress(response.data.progress_percentage);
       })
       .catch(function (error) {
         console.log(error);

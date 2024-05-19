@@ -64,7 +64,7 @@ const LabSet = () => {
   //API call to get all labs within the db
   function showLabs() {
     axios
-      .get("http://127.0.0.1:5000/labs/get_labs", {})
+      .get("/labs/get_labs", {})
       .then(function (response) {
         if (response.status === 200) {
           console.log(response.data);

@@ -31,9 +31,9 @@ function App() {
         <Routes>
           <Route index element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/lab" element={<Lab />} />
+          <Route path="/takinglab" element={<Lab />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/LabCreator" element={<LabCreator />} />
+          <Route path="/creatinglab" element={<LabCreator />} />
         </Routes>
       </BrowserRouter>
     </div>

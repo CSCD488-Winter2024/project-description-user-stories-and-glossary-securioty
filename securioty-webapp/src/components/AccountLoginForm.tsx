@@ -28,7 +28,7 @@ const AccountLoginForm = ({
   function onClickSubmit() {
     if (registrationStatus) {
       axios
-        .post("http://127.0.0.1:5000/auth/register", {
+        .post("/auth/register", {
           email: account.username,
           password: account.password,
           first: account.firstname,
@@ -49,7 +49,7 @@ const AccountLoginForm = ({
         });
     } else {
       axios
-        .post("http://127.0.0.1:5000/auth/login", {
+        .post("/auth/login", {
           email: account.username,
           password: account.password,
         })
@@ -73,7 +73,6 @@ const AccountLoginForm = ({
 
   function onClickLogout() {
     setLoginMessagePrompt("");
-    onClickLogoutSet();
   }
 
   function onClickRegistration() {
