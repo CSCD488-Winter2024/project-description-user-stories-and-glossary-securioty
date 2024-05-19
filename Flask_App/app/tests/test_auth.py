@@ -1,8 +1,8 @@
-"""Auth logic unit testing."""
+"""Tests for the authentication routes."""
 import pytest
-
 from .. import create_app, db
 from ..auth.models import User
+from flask_jwt_extended import decode_token
 
 
 @pytest.fixture
@@ -22,16 +22,49 @@ def client():
 def test_registration_success(client):
     """Using mocked database in memory, tests valid responses from registration"""
     response = client.post('/auth/register', json={
-        'email': 'test@example.com',
+        'email': 'test2@example.com',
         'password': 'testPassword',
         'first': 'testFirst',
         'last': 'testLast',
-        'role': 'Student'
+        'role': 'STUDENT'
     })
     data = response.get_json()
     assert response.status_code == 201
     assert data['message'] == 'User registered successfully'
-    assert User.query.count() == 1
+    assert User.query.count() == 2  # Dummy user is created upon testing startup
+
+
+def test_registration_existing_email(client):
+    """Tests registration with an existing email"""
+    client.post('/auth/register', json={
+        'email': 'test@example.com',
+        'password': 'testPassword',
+        'first': 'testFirst',
+        'last': 'testLast',
+        'role': 'STUDENT'
+    })
+    response = client.post('/auth/register', json={
+        'email': 'test@example.com',
+        'password': 'testPassword',
+        'first': 'testFirst',
+        'last': 'testLast',
+        'role': 'STUDENT'
+    })
+    data = response.get_json()
+    assert response.status_code == 400
+    assert data['errors'] == 'Email already registered'
+
+
+def test_registration_missing_fields(client):
+    """Tests registration with missing fields"""
+    response = client.post('/auth/register', json={
+        'email': 'test@example.com',
+        'password': 'testPassword',
+        'first': 'testFirst'
+    })
+    data = response.get_json()
+    assert response.status_code == 400
+    assert 'errors' in data
 
 
 def test_login_success(client):
@@ -44,7 +77,7 @@ def test_login_success(client):
         'role': 'STUDENT'
     })
 
-    login_response = client.post('auth/login', json={
+    login_response = client.post('/auth/login', json={
         'email': 'test@example.com',
         'password': 'testPassword'
     })
@@ -52,6 +85,8 @@ def test_login_success(client):
     login_data = login_response.get_json()
     assert login_response.status_code == 200
     assert 'access_token' in login_data
+    decoded_token = decode_token(login_data['access_token'])
+    assert decoded_token['sub'] == 'test@example.com'
 
 
 def test_login_failure(client):
@@ -64,7 +99,7 @@ def test_login_failure(client):
         'role': 'STUDENT'
     })
 
-    login_response = client.post('auth/login', json={
+    login_response = client.post('/auth/login', json={
         'email': 'test@example.com',
         'password': 'INCORRECT'
     })
@@ -73,7 +108,7 @@ def test_login_failure(client):
     assert login_response.status_code == 401
     assert login_data['message'] == 'Invalid email or password'
 
-    login_response = client.post('auth/login', json={
+    login_response = client.post('/auth/login', json={
         'email': 'INVALID_USER',
         'password': 'FAKE_PASSWORD'
     })
