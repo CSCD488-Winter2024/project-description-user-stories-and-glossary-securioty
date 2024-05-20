@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import AccountPopup from "./AccountLoginForm";
 import LoginButton from "./LoginButton";
 import accountData from "../scripts/accountData";
+import AccountLoginForm from "./AccountLoginForm";
 
 interface Props {
   onLoginChange: (arg0: boolean) => void;
@@ -37,7 +37,15 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
 
   function onClickLogout() {
     setLoggedInState(false);
-    setAccountCredentials({ ...account, username: "", password: "" });
+    var emptyAccount: accountData = {
+      username: "",
+      password: "",
+      firstname: "",
+      lastname: "",
+      role: "",
+      token: "",
+    };
+    setAccount(emptyAccount);
     setLoginMessage("");
   }
 
@@ -75,8 +83,17 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
                   </a>
                 </li>
               )}
+              {loggedIn && (
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/creatinglab"
+                >
+                  Create Lab
+                </a>
+              )}
               <LoginButton loggedIn={loggedIn} />
-              <AccountPopup
+              <AccountLoginForm
                 onClickLogoutSet={onClickLogout}
                 setAccountCredentials={setAccountCredentials}
                 account={account}
