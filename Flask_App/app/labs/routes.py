@@ -3,10 +3,13 @@ Lab routes.
 
 This module contains routes for managing lab information.
 """
+from itertools import count
 from urllib import request
 
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
+
+from Flask_App.app.auth.models import User
 
 from .models import Labs, UserProgress, Question
 from .. import db
@@ -34,7 +37,7 @@ def get_labs():
                  'description': question.description} for question in lab.questions
             ]
         })
-        return jsonify(labs_list)
+    return jsonify(labs_list)
 
 
 @labs.route('/update_progress', methods=['POST'])
@@ -54,7 +57,7 @@ def update_progress():
     is_correct = question.answer == answer
 
     progress = UserProgress.query.filter_by(
-        user_id=user_id, lab_id=lab_id, question_id=question_id).all()
+        user_id=user_id, lab_id=lab_id, question_id=question_id).first()
 
     if progress is None:
         progress = UserProgress(
@@ -134,3 +137,57 @@ def create_lab():
 
     db.session.commit()
     return jsonify({'message': 'Lab created successfully', 'id': new_lab.id}), 201
+
+@labs.route('/grade_options', methods=['GET'])
+@jwt_required()
+def grade_options():
+    all_labs = Labs.query.all()
+    labs_list = []  # Initialize with a dictionary containing 'title': 'All'
+
+    for lab in all_labs:
+        labs_list.append({
+            'title': lab.title, 'id':lab.id
+        })
+    
+    return jsonify(labs_list)
+
+@labs.route('/get_students', methods=['POST'])
+@jwt_required()
+def get_students():
+    labTitle = request.json.get('labId')
+    
+    # Query the Labs table to get the lab entry with the given title
+    lab = Labs.query.filter_by(title=labTitle).first()
+
+    # Check if the lab was found
+    if lab is None:
+        return jsonify({"error": "Lab not found"}), 404
+    
+    # Extract the labID from the lab entry
+    labID = lab.id
+
+
+    student_list = UserProgress.query.filter_by(lab_id=labID).group_by(UserProgress.user_id).all()
+    #print(student_list)
+
+    total_questions = Question.query.filter_by(lab_id=labID).count()
+
+    # Query the number of correct answers for the lab
+    
+    student_array=[]
+    for student in student_list:
+        completed_questions = UserProgress.query.filter_by(user_id=student.user_id, lab_id=labID, is_correct=True).all()
+        correct_answers = len(completed_questions)
+        percentage_correct = 0
+        if total_questions != 0:
+            percentage_correct = (correct_answers / total_questions) * 100
+
+        name = User.query.filter_by(user_id = student.user_id).first()
+        student_array.append(
+            {'a':student.user_id,'firstname': name.first, 'lastname':name.last,'lazId': labTitle,'score': percentage_correct}
+            
+        )
+   
+
+    return jsonify(student_array)
+

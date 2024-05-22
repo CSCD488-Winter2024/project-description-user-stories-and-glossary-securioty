@@ -1,9 +1,8 @@
 import React from 'react';
 interface Student {
-    courseCode: string;
-    schoolYear: string;
-    firstName: string;
-    lastName: string;
+    //courseCode: string;
+    //schoolYear: string;
+    user_id: string;
     labId: string;
     score: string;
 }
@@ -36,7 +35,7 @@ const StudentGradeList: React.FC<Props> = ({ students, filtersApplied }) => {
                     <div key={rowIndex} className="row">
                         {Object.values(student).map((item, colIndex) => (
                             <div key={colIndex} className="col" style={{ backgroundColor: 'lightgray', color: 'black', padding: '10px' }}>
-                                {colIndex === Object.values(student).length - 1 ? (
+                                {item === student.score ? (
                                     <span className="badge rounded-pill" style={{ width: '80px', color: 'black', ...getBadgeColor(item.toString()) }}>{item}%</span>
                                 ) : (
                                     item

@@ -1,26 +1,26 @@
 import React from 'react';
 
 interface GradeFilterBarProps {
-    courseCodeOptions: string[];
-    schoolYearOptions: string[];
+    //courseCodeOptions: string[];
+    //schoolYearOptions: string[];
     labIDOptions: string[];
-    courseCode: string;
-    setCourseCode: React.Dispatch<React.SetStateAction<string>>;
-    schoolYear: string;
-    setSchoolYear: React.Dispatch<React.SetStateAction<string>>;
+    //courseCode: string;
+    //setCourseCode: React.Dispatch<React.SetStateAction<string>>;
+    //schoolYear: string;
+    //setSchoolYear: React.Dispatch<React.SetStateAction<string>>;
     labId: string;
     setLabId: React.Dispatch<React.SetStateAction<string>>;
     handleApplyFilters: () => void;
 }
 
 const GradeFilterBar: React.FC<GradeFilterBarProps> = ({ 
-    courseCodeOptions, 
-    schoolYearOptions, 
+    //courseCodeOptions, 
+    //schoolYearOptions, 
     labIDOptions, 
-    courseCode, 
-    setCourseCode, 
-    schoolYear, 
-    setSchoolYear, 
+    //courseCode, 
+    //setCourseCode, 
+    //schoolYear, 
+    //setSchoolYear, 
     labId, 
     setLabId, 
     handleApplyFilters 
@@ -60,8 +60,6 @@ const GradeFilterBar: React.FC<GradeFilterBarProps> = ({
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul className="navbar-nav">
-                        <FilterDropdown options={courseCodeOptions} currentValue={courseCode} setCurrentValue={setCourseCode} />
-                        <FilterDropdown options={schoolYearOptions} currentValue={schoolYear} setCurrentValue={setSchoolYear} />
                         <FilterDropdown options={labIDOptions} currentValue={labId} setCurrentValue={setLabId} />
                         <ApplyFiltersButton />
                     </ul>
