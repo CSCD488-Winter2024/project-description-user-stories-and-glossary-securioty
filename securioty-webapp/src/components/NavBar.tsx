@@ -92,6 +92,15 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
                   Create Lab
                 </a>
               )}
+              {loggedIn && (
+                <a
+                  className="nav-link active"
+                  aria-current="page"
+                  href="/instructor"
+                >
+                  Grading
+                </a>
+              )}
               <LoginButton loggedIn={loggedIn} />
               <AccountLoginForm
                 onClickLogoutSet={onClickLogout}

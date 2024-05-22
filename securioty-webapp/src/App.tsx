@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Lab from "./pages/Lab";
 import Profile from "./pages/Profile";
 import "./App.css";
+import InstructorPage from "./pages/Instructor";
 import LabCreator from "./pages/LabCreator";
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/takinglab" element={<Lab />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/instructor" element={<InstructorPage />} />
           <Route path="/creatinglab" element={<LabCreator />} />
         </Routes>
       </BrowserRouter>
