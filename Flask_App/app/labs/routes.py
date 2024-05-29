@@ -233,6 +233,7 @@ def get_completion_information():
     Returns:
         JSON: A JSON response containing the completion information.
     """
+    user_id = get_jwt_identity()
     user_progress = UserProgress.query.filter_by(user_id=user_id).all()
     lab_ids = {progress.lab_id for progress in user_progress}
     user_labs = Labs.query.filter(Labs.id.in_(lab_ids)).all()
