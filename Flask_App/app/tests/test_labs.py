@@ -24,6 +24,7 @@ def client():
             db.session.remove()
             db.drop_all()
 
+
 def get_access_token(client, email, password):
     """Helper function to get JWT token for a user"""
     response = client.post('/auth/login', json={
@@ -32,6 +33,7 @@ def get_access_token(client, email, password):
     })
     data = response.get_json()
     return data.get('access_token')
+
 
 def test_create_lab_success(client):
     """Tests creating a lab with valid data"""
@@ -59,6 +61,7 @@ def test_create_lab_success(client):
     assert Labs.query.count() == 2  # Including the dummy lab
     assert Question.query.count() == 4  # Including the questions of the dummy lab
 
+
 def test_create_lab_missing_fields(client):
     """Tests creating a lab with missing required fields"""
     access_token = get_access_token(client, 'admin@example.com', 'adminPassword')
@@ -69,6 +72,7 @@ def test_create_lab_missing_fields(client):
     data = response.get_json()
     assert response.status_code == 400
     assert 'errors' in data
+
 
 def test_create_lab_invalid_questions_format(client):
     """Tests creating a lab with invalid questions format"""
@@ -83,6 +87,7 @@ def test_create_lab_invalid_questions_format(client):
     assert response.status_code == 400
     assert 'errors' in data
 
+
 def test_get_progress_percentage(client):
     """Tests retrieving the progress percentage and completed question IDs for a lab."""
     access_token = get_access_token(client, 'Test@gmail.com', 'TEST1234')
@@ -96,5 +101,3 @@ def test_get_progress_percentage(client):
     assert 'completed_question_ids' in data
     assert data['progress_percentage'] == 100
     assert set(data['completed_question_ids']) == {1, 2}
-
-

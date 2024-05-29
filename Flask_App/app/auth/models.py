@@ -1,6 +1,6 @@
-"""Defines the User database."""
-from .. import db, bcrypt
-from .roles import UserRole
+"""Defines the User database and related actions."""
+from Flask_App.app.extensions import db, bcrypt
+from Flask_App.app.auth.roles import UserRole
 
 
 class User(db.Model):

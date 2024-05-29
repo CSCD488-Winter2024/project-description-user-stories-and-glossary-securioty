@@ -5,8 +5,8 @@ This module contains routes for user authentication, including login and registr
 """
 
 from flask import Blueprint, jsonify, request
-from .. import db
-from .models import User
+from Flask_App.app.extensions import db
+from Flask_App.app.auth.models import User
 from flask_jwt_extended import create_access_token
 
 auth = Blueprint('auth', __name__)
