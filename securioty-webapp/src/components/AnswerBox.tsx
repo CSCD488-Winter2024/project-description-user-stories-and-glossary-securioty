@@ -17,7 +17,8 @@ const AnswerBox = ({ labID, questionID, setProgress }: Props) => {
     //AnswerBox.tsx, runs when user hits "Submit" button in lab
     const accountData = localStorage.getItem("ACCOUNT");
     const account = accountData !== null ? JSON.parse(accountData) : "";
-    const h = { Authorization: `Bearer ${account.token.access_token}` };
+    console.log(account.token);
+    const h = { Authorization: `Bearer ${account.token}` };
     console.log({
       lab_id: labID,
       question_id: questionID,
@@ -42,19 +43,19 @@ const AnswerBox = ({ labID, questionID, setProgress }: Props) => {
         } else {
           setAnswerFeedback("Incorrect. Try again.");
         }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
 
-    axios
-      .get(
-        "/labs/get_progress_percentage/" + labID,
+        axios
+          .get(
+            "/labs/get_progress_percentage/" + labID,
 
-        { headers: h }
-      )
-      .then(function (response) {
-        setProgress(response.data.progress_percentage);
+            { headers: h }
+          )
+          .then(function (response) {
+            setProgress(response.data.progress_percentage);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       })
       .catch(function (error) {
         console.log(error);

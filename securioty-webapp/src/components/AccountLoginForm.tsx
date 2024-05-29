@@ -22,10 +22,47 @@ const AccountLoginForm = ({
   loginMessage,
 }: Props) => {
   const [registrationStatus, setRegistrationStatus] = useState<boolean>(false);
+  const [secretPhrase, setSecretPhrase] = useState<string>("");
 
   //Triggered when submit button is pressed within login form
   //Calls the register endpoint if registrationStatus is True, otherwise calls Login endpoint
+  function login() {
+    axios
+      .post("/auth/login", {
+        email: account.username,
+        password: account.password,
+      })
+      .then(function (response) {
+        if (response.status === 200) {
+          onLoginChange(true);
+          setLoginMessagePrompt("Successful login!");
+          setAccountCredentials({
+            ...account,
+            token: response.data.access_token,
+            firstname: response.data.first,
+            lastname: response.data.last,
+            role: response.data.role,
+          });
+          console.log(account);
+          console.log(response.data.first);
+          console.log(response.data.access_token);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+        setLoginMessagePrompt("Invalid Credentials, try again");
+      });
+  }
+
   function onClickSubmit() {
+    if (
+      registrationStatus &&
+      account.role != "STUDENT" &&
+      secretPhrase != "chickenpizza"
+    ) {
+      alert("Incorrect phrase");
+      return;
+    }
     if (registrationStatus) {
       axios
         .post("/auth/register", {
@@ -36,11 +73,10 @@ const AccountLoginForm = ({
           role: account.role,
         })
         .then(function (response) {
-          console.log(response);
           if (response.status === 201) {
-            setLoginMessagePrompt("Account Created! You are now logged in.");
             onLoginChange(true);
             setRegistrationStatus(false);
+            login();
           }
         })
         .catch(function (error) {
@@ -48,31 +84,8 @@ const AccountLoginForm = ({
           setLoginMessagePrompt("Email already exists");
         });
     } else {
-      axios
-        .post("/auth/login", {
-          email: account.username,
-          password: account.password,
-        })
-        .then(function (response) {
-          console.log(response);
-          if (response.status === 200) {
-            onLoginChange(true);
-            setLoginMessagePrompt("Successful login!");
-            localStorage.setItem(
-              "ACCOUNT",
-              JSON.stringify({ ...account, token: response.data })
-            );
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-          setLoginMessagePrompt("Invalid Credentials, try again");
-        });
+      login();
     }
-  }
-
-  function onClickLogout() {
-    setLoginMessagePrompt("");
   }
 
   function onClickRegistration() {
@@ -94,6 +107,9 @@ const AccountLoginForm = ({
   };
   const handleRoleChange = (event: any) => {
     setAccountCredentials({ ...account, role: event.target.value });
+  };
+  const handleSecretPhraseChange = (event: any) => {
+    setSecretPhrase(event.target.value);
   };
   //End state change handling --------------------------------
 
@@ -186,6 +202,22 @@ const AccountLoginForm = ({
                         </select>
                       </div>
                     </div>
+
+                    {(account.role == "INSTRUCTOR" ||
+                      account.role == "ADMIN") && (
+                      <div className="row mb-3">
+                        <label className="col-sm-2 col-form-label">
+                          Secret Phrase
+                        </label>
+                        <div className="col-sm-10">
+                          <input
+                            className="form-control"
+                            value={secretPhrase}
+                            onChange={handleSecretPhraseChange}
+                          ></input>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
                 {loginMessage != "" && <p>{loginMessage}</p>}
@@ -211,7 +243,7 @@ const AccountLoginForm = ({
               <button
                 type="submit"
                 className="btn btn-primary"
-                onClick={loggedIn ? onClickLogout : onClickSubmit}
+                onClick={loggedIn ? onClickLogoutSet : onClickSubmit}
               >
                 {loggedIn ? "Logout" : "Submit"}
               </button>

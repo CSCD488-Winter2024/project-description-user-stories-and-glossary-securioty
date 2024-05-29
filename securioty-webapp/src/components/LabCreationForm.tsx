@@ -66,7 +66,7 @@ const LabCreationForm = () => {
   const submitLab = () => {
     const accountData = localStorage.getItem("ACCOUNT");
     const account = accountData !== null ? JSON.parse(accountData) : "";
-    const h = { Authorization: `Bearer ${account.token.access_token}` };
+    const h = { Authorization: `Bearer ${account.token}` };
     axios
       .post("/labs/create_lab", newLab, { headers: h })
       .then(function (response) {
