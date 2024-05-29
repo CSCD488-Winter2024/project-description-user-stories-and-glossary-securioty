@@ -222,9 +222,9 @@ def get_progress_percentage(lab_id):
     })
 
 
-@labs.route('/get_completion_information/<int:user_id>', methods=["GET"])
+@labs.route('/get_completion_information', methods=["GET"])
 @jwt_required()
-def get_completion_information(user_id):
+def get_completion_information():
     """Get all labs a user has worked on and their progress for each lab.
 
     Args:
@@ -235,7 +235,7 @@ def get_completion_information(user_id):
     """
     user_progress = UserProgress.query.filter_by(user_id=user_id).all()
     lab_ids = {progress.lab_id for progress in user_progress}
-    user_labs = Labs.query.filter_by(Labs.id.in_(lab_ids)).all()
+    user_labs = Labs.query.filter(Labs.id.in_(lab_ids)).all()
 
     labs_progress_list = []
     for lab in user_labs:
@@ -251,3 +251,4 @@ def get_completion_information(user_id):
             'progress_percentage': percentage_correct,
             'completed_questions': [q.question_id for q in completed_questions],
         })
+    return jsonify(labs_progress_list)
