@@ -21,6 +21,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("LOGGEDIN", JSON.stringify(loggedIn));
   }, [loggedIn]);
+
   function setLoggedInState(loggedIn: boolean) {
     setLoggedIn(loggedIn);
   }
@@ -30,8 +31,8 @@ function App() {
       <NavBar loggedIn={loggedIn} onLoginChange={setLoggedInState}></NavBar>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route index element={<Home loggedIn={loggedIn} />} />
+          <Route path="/home" element={<Home loggedIn={loggedIn} />} />
           <Route path="/takinglab" element={<Lab />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/instructor" element={<InstructorPage />} />

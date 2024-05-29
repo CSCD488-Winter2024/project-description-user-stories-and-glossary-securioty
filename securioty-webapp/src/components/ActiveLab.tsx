@@ -26,7 +26,7 @@ const ActiveLab = ({ labItem }: Props) => {
   function getProgress() {
     const accountData = localStorage.getItem("ACCOUNT");
     const account = accountData !== null ? JSON.parse(accountData) : "";
-    const h = { Authorization: `Bearer ${account.token.access_token}` };
+    const h = { Authorization: `Bearer ${account.token}` };
     axios
       .get("/labs/get_progress_percentage/" + labItem.id, { headers: h })
       .then(function (response) {

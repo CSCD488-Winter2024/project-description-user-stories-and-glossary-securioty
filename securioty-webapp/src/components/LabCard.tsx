@@ -6,18 +6,10 @@ import lab from "../scripts/lab";
 interface Props {
   children: ReactNode;
   labItem: lab;
+  loggedIn: boolean;
 }
 
-const LabCard = ({ children, labItem }: Props) => {
-  const [account, setAccount] = useState<accountData>(() => {
-    const localValue = localStorage.getItem("ACCOUNT");
-    if (localValue == null) {
-      return [];
-    } else {
-      return JSON.parse(localValue);
-    }
-  });
-
+const LabCard = ({ children, labItem, loggedIn }: Props) => {
   const handleLabClick = () => {
     localStorage.setItem("currentLab", JSON.stringify(labItem));
     console.log(labItem);
@@ -30,7 +22,7 @@ const LabCard = ({ children, labItem }: Props) => {
         <div className="card-body">
           <h5 className="card-title">{labItem.title}</h5>
           <p className="card-text">{children}</p>
-          {account.token != "" ? (
+          {loggedIn ? (
             <button onClick={handleLabClick} className="btn btn-primary">
               Start Learning!
             </button>

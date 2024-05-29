@@ -4,7 +4,11 @@ import axios from "axios";
 import Lab from "../pages/Lab";
 import lab from "../scripts/lab";
 
-const LabSet = () => {
+interface Props {
+  loggedIn: boolean;
+}
+
+const LabSet = ({ loggedIn }: Props) => {
   //Hook that calls the showLabs method on component load
   const [labArray, setLabArray] = useState<lab[]>();
   useEffect(() => {
@@ -67,10 +71,10 @@ const LabSet = () => {
       .get("/labs/get_labs", {})
       .then(function (response) {
         if (response.status === 200) {
-          console.log(response.data);
+          //console.log(response.data);
           const calledLabs = response.data;
           setLabArray(calledLabs);
-          console.log(labArray);
+          //console.log(labArray);
         }
       })
       .catch(function (error) {
@@ -86,7 +90,9 @@ const LabSet = () => {
             labArray.map((lab) => {
               return (
                 <div className="p-4" key={lab.id}>
-                  <Card labItem={lab}>{lab.description}</Card>
+                  <Card loggedIn={loggedIn} labItem={lab}>
+                    {lab.description}
+                  </Card>
                 </div>
               );
             })}

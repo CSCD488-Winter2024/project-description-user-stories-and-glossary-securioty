@@ -72,10 +72,45 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
+              {((loggedIn && account.role == "INSTRUCTOR") ||
+                account.role == "ADMIN") && (
+                <li className="nav-item dropdown">
+                  <a
+                    className="nav-link dropdown-toggle bg-danger btn mx-1"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Instructor tools
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        aria-current="page"
+                        href="/creatinglab"
+                      >
+                        Create Lab
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="dropdown-item"
+                        aria-current="page"
+                        href="/instructor"
+                      >
+                        Grading
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
+
               {loggedIn && (
                 <li className="nav-item ml-auto">
                   <a
-                    className="nav-link active"
+                    className="nav-link active btn bg-primary text-white mx-1"
                     aria-current="page"
                     href="/profile"
                   >
@@ -83,24 +118,7 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
                   </a>
                 </li>
               )}
-              {loggedIn && (
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/creatinglab"
-                >
-                  Create Lab
-                </a>
-              )}
-              {loggedIn && (
-                <a
-                  className="nav-link active"
-                  aria-current="page"
-                  href="/instructor"
-                >
-                  Grading
-                </a>
-              )}
+
               <LoginButton loggedIn={loggedIn} />
               <AccountLoginForm
                 onClickLogoutSet={onClickLogout}
@@ -112,9 +130,16 @@ const NavBar = ({ onLoginChange, loggedIn }: Props) => {
                 loginMessage={loginMessage}
               />
               {loggedIn && (
-                <button className="btn btn-primary" onClick={onClickLogout}>
-                  Logout
-                </button>
+                <li className="nav-item ml-auto">
+                  <a
+                    className="nav-link active btn bg-primary text-white mx-1"
+                    aria-current="page"
+                    href="/home"
+                    onClick={onClickLogout}
+                  >
+                    Logout
+                  </a>
+                </li>
               )}
             </ul>
           </div>
