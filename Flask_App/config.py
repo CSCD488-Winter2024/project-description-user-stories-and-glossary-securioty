@@ -5,8 +5,6 @@ This module contains the configuration settings for different environments.
 """
 import os
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 
 class Config:
     """Base configuration."""

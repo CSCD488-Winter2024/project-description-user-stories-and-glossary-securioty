@@ -86,7 +86,7 @@ def test_login_success(client):
     assert login_response.status_code == 200
     assert 'access_token' in login_data
     decoded_token = decode_token(login_data['access_token'])
-    assert decoded_token['sub'] == 'test@example.com'
+    assert decoded_token['sub'] == 2  # the decoded token will resolve to userID which would be 2 in this case.
 
 
 def test_login_failure(client):

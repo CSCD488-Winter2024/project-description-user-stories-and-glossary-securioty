@@ -1,6 +1,6 @@
 """Defines the labs database model."""
-from .. import db
-from ..auth.models import User
+from Flask_App.app.extensions import db
+from Flask_App.app.auth.models import User
 
 
 class Labs(db.Model):
