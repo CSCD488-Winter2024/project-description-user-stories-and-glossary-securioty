@@ -53,7 +53,7 @@ def setup_testing_data():
         db.session.commit()
     if Labs.query.count() == 0:
         #dummy_lab = Labs(id=1, title='Test Lab', description='Test Lab Description')
-        intro_lab = Labs(id=1, title='Introduction Lab', description='Beginner concepts including binwalk on a firmware')
+        intro_lab = Labs(id=1, title='Lab 1: Introduction Lab', description='binwalk, hashcat, FAT')
         db.session.add(intro_lab)
         db.session.commit()
 
@@ -62,20 +62,14 @@ def setup_testing_data():
             Question(
                 id=1,
                 title='What is the cpu name?',
-                description='''Open up VM.
-                            Run “sudo apt update”.
-                            Run “sudo apt install hashcat”.
-                            Unzip firmware onto desktop.
-                            Open up terminal window and navigate to desktop.
-                            Run “binwalk firmwarename”.''',
+                description='Open up VM. Run “sudo apt update”. Run “sudo apt install hashcat”. Unzip firmware onto desktop. Open up terminal window and navigate to desktop. Run “binwalk firmwarename”.',
                 answer='MIPS',
                 lab_id=intro_lab.id
             ),
             Question(
                 id=2,
                 title='True/False: Is this firmware encrypted?',
-                description='''Run “binwalk -E firmwarename”.
-                            An entropy graph will popup, and a straight line across means that the firmware is encrypted, any dips in the graph shows not encrypted.''',
+                description='Run “binwalk -E firmwarename”. An entropy graph will popup, and a straight line across means that the firmware is encrypted, any dips in the graph shows not encrypted.',
                 answer='False',
                 lab_id=intro_lab.id
             ),
@@ -96,28 +90,28 @@ def setup_testing_data():
             Question(
                 id=5,
                 title='What is the id number associated with md5crypt?',
-                description='Run “hashid pastedhash”. Use hashcat.net to find the correct id number associated with the type of hash used',
+                description='Run “hashid pastedhash”. Use hashcat.net to find the correct id number associated with the type of hash used.',
                 answer='500',
                 lab_id=intro_lab.id
             ),
             Question(
                 id=6,
                 title='What was the password for the admin user?',
-                description='Run “hashcar -a 3 -m 1500 passwd –force”. -a 3 specifies a dictionary brute force hashing attack. -m 1500 specifies DES encryption was used to hash the passwords. Run the same command with “--show” at the end to show cracked passwords',
+                description='Run “hashcar -a 3 -m 1500 passwd –force”. -a 3 specifies a dictionary brute force hashing attack. -m 1500 specifies DES encryption was used to hash the passwords. Run the same command with “--show” at the end to show cracked passwords.',
                 answer='1234',
                 lab_id=intro_lab.id
             ),
             Question(
                 id=7,
                 title='What is the architecture that FAT is being ran on?',
-                description='In the terminal navigate back to the Desktop. Navigate to “/tools/firmware-analysis-toolkit”. Run “./fat.py path/tp/rootfs.squashfs”',
+                description='In the terminal navigate back to the Desktop. Navigate to “/tools/firmware-analysis-toolkit”. Run “./fat.py path/tp/rootfs.squashfs”.',
                 answer='mipseb',
                 lab_id=intro_lab.id
             ),
             Question(
                 id=8,
                 title='What is FAT doing? Emulating a router\'s firmware or connecting to a physical device?',
-                description='Press enter to run the firmware. Take note of the IP address 192.168.0.100 that shows when the router is being emulated. Open a web browser and navigate to the ip address',
+                description='Press enter to run the firmware. Take note of the IP address 192.168.0.100 that shows when the router is being emulated. Open a web browser and navigate to the ip address.',
                 answer='Emulating a router\'s firmware',
                 lab_id=intro_lab.id
             )
@@ -156,48 +150,6 @@ def setup_testing_data():
                 lab_id=intro_lab.id,
                 question_id=questions[1].id,
                 answer=questions[1].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[2].id,
-                answer=questions[2].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[3].id,
-                answer=questions[3].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[4].id,
-                answer=questions[4].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[5].id,
-                answer=questions[5].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[6].id,
-                answer=questions[6].answer,
-                is_correct=True
-            ),
-            UserProgress(
-                user_id=user.user_id,
-                lab_id=intro_lab.id,
-                question_id=questions[7].id,
-                answer=questions[7].answer,
                 is_correct=True
             )
         ]
