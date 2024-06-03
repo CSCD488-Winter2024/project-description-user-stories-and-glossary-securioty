@@ -4,6 +4,7 @@ import profileLab from "../scripts/profileLab";
 
 const ProfileOptions = () => {
   const [userLabProgress, setUserLabProgress] = useState<profileLab[]>();
+  const [isProgress, setIsProgress] = useState<boolean>(false);
   useEffect(() => {
     getAccountProgress();
   }, []);
@@ -24,7 +25,9 @@ const ProfileOptions = () => {
           progress: item.progress_percentage,
         }));
         setUserLabProgress(transformedData);
-        console.log(userLabProgress);
+        if (transformedData.length != 0) {
+          setIsProgress(true);
+        }
       })
       .catch(function (error) {
         console.error("Error fetching progress:", error);
@@ -33,10 +36,10 @@ const ProfileOptions = () => {
 
   return (
     <>
-      <h2 className="text-white">
+      <h2 className="text-white text-center">
         Welcome {account.firstname} {account.lastname}
       </h2>
-      <h2 className="text-white">Lab Progress:</h2>
+      <h2 className="text-white text-center">Lab Progress:</h2>
       <div className="container text-center overflow-hidden px-4">
         <div className="row row-cols-3 gx-5 pt-5">
           {userLabProgress !== undefined &&
@@ -54,30 +57,9 @@ const ProfileOptions = () => {
             })}
         </div>
       </div>
-      <div
-        className="btn-group-vertical container d-flex mt-5 pt-5"
-        role="group"
-        aria-label="Vertical button group"
-      >
-        <button
-          type="button"
-          className="btn btn-primary d-flex justify-content-center align-items-center mt-5 pt-3 pb-3"
-        >
-          Change Password
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary d-flex justify-content-center align-items-center mt-5 pt-3 pb-3"
-        >
-          Change Email
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary d-flex justify-content-center align-items-center mt-5 pt-3 pb-3"
-        >
-          Reset Progress/ Delete Account
-        </button>
-      </div>
+      {!isProgress && (
+        <h2 className="text-white text-center">No Labs Attempted</h2>
+      )}
     </>
   );
 };
