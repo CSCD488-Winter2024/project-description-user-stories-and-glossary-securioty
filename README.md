@@ -84,3 +84,4 @@ port is being used for testing.
 ### Full Stack Testing
 - In order to have the frontend and backend working in tandem, firstly follow the above steps.
 - Additionally for the frontend, ensure you have followed the installation steps, then navigate to where you cloned + "SecurIoTy\project-description-user-stories-and-glossary-securioty\securioty-webapp" run "npm run dev" and navigate to the localhost url that is displayed to view the webapp
+- NOTE: The frontend uses React Proxy to avoid issues with CORS. This will cause the app to break when deployed unless both the react app, and flask app are both on the same port.
