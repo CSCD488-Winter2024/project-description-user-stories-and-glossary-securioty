@@ -55,6 +55,10 @@ def setup_testing_data():
         #dummy_lab = Labs(id=1, title='Test Lab', description='Test Lab Description')
         intro_lab = Labs(id=1, title='Lab 1: Introduction Lab', description='binwalk, hashcat, FAT')
         db.session.add(intro_lab)
+        bypass_lab = Labs(id=2, title='Lab 2: Bypassing Login Pages', description='Using burpsuite to get admin credentials')
+        db.session.add(bypass_lab)
+        remote_lab = Labs(id=3, title='Lab 3: Remote Code Execution', description='Exposing credentials')
+        db.session.add(remote_lab)
         db.session.commit()
 
         questions = [
@@ -110,10 +114,150 @@ def setup_testing_data():
             ),
             Question(
                 id=8,
-                title='What is FAT doing? Emulating a router\'s firmware or connecting to a physical device?',
+                title='What is FAT doing? \'Emulating a router\'s firmware\' or \'connecting to a physical device\'?',
                 description='Press enter to run the firmware. Take note of the IP address 192.168.0.100 that shows when the router is being emulated. Open a web browser and navigate to the ip address.',
                 answer='Emulating a router\'s firmware',
                 lab_id=intro_lab.id
+            ),
+            Question(
+                id=9,
+                title='From research, what is the most common password for an admin user?',
+                description='Same as you did in the intro lab, expand your firmware onto your desktop and run “binwalk -Me firmwarename”. Same as you did in the intro lab, navigate to /tools/firmware-analysis-toolkit and run the fat.py on the router and open up the interface in the browser.',
+                answer='admin',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=10,
+                title='What does “Send to intruder” do on burpsuite? \'Built-in fuzzing tool\' or \'Auto-hacker\'?',
+                description='Open a new terminal and run the command “java -jar -Xmx4g ‘/home/iot/Desktop/tools/burpsuite.jar’”. Select create temporary project and then finish to create a new burpsuite window to run the proxy. Return to the interface website and open the browser settings on the top right-hand side, navigate to the bottom and open up the network settings. Select radio button “Manual proxy configuration” and add 127.0.0.1 with port 8080 and hit OK at the bottom.',
+                answer='Built-in fuzzing tool',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=11,
+                title='Which attack type would be best for a dictionary password attack? (do some research on each attack type)',
+                description='On the burpsuite window, make sure “Intercept is on”. On the browser, type “admin” as the password. The request should be captured in the burpsuite “raw” window. Right-click on the request and hit “send to intruder”. Click on the positions tab, and click the drop-down of attack types. ',
+                answer='Cluster-bomb',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=12,
+                title='How many payload positions are there after the variables are set?',
+                description='Select the attack type from the last question and click “Clear $” on the right-hand side. Now we have to select our attack variables, so you can double click on “admin” as the username and click “Add $” as well as double click on “admin” as the password and click “Add $”. ',
+                answer='2',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=13,
+                title='True/False: 40\% of admin default credentials go unchanged.',
+                description='Click on the Payloads tab. Now you can specify two lists of variables, one for the username and one for the list of passwords you would like to try. Type admin and click add for the first list. Change the payloads dropdown to 2 for the passwords list. Type a list of passwords including admin, 1234, password, netgear, 123456, admin123 clicking add for each separate password. On the payloads tab, click start attack on far right side. As the attack is happening, you can hopefully see two different response codes, one for success and one for failure.',
+                answer='True',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=14,
+                title='What was the correct password?',
+                description='Return back to the burpsuite proxy tab and select “Intercept is off”. Return to the browser window and turn off the manual proxy in the network settings. You will notice you have been successfully logged into the router! This happened because not only was the intruder testing each password on the proxy, but also trying each one on the browser.',
+                answer='password',
+                lab_id=bypass_lab.id
+            ),
+            Question(
+                id=15,
+                title='What OS does this file system represent?',
+                description='Same as you did in the intro lab, expand your firmware onto your desktop and run “binwalk -Me firmwarename”. Navigate to the squashfs-root folder and run “ls”.',
+                answer='Linux',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=16,
+                title='What is one function used in this file that shows us it is insecure and can be exploited?',
+                description='Run ‘find . -name “*.php”’ . Use nano to open up boardDataWW.php and look over the file.',
+                answer='exec()',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=17,
+                title='As a refresher, what is the password for admin?',
+                description='Now that we have identified the file we will be exploiting we can emulate this router. Same as you did in the intro lab, navigate to /tools/firmware-analysis-toolkit and run the fat.py on the router and open up the interface in the browser and login.',
+                answer='password',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=18,
+                title='What does WW stand for?',
+                description='Once logged in, navigate to 192.168.0.100/boardDataWW.php',
+                answer='worldwide',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=19,
+                title='What is the error received when you type an invalid MAC address?',
+                description='Play around by typing some MAC addresses that are valid or invalid and see what kind of responses you get. Also try typing some terminal commands since that is ultimately what we are trying to accomplish here.',
+                answer='Enter a valid MAC Address',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=20,
+                title='What is the point of using burpsuite? \'Security testing of web applications\' or \'Capturing of packets\'?',
+                description='Open a new terminal and run the command “java -jar -Xmx4g ‘/home/iot/Desktop/tools/burpsuite.jar’”. Select create temporary project and then finish to create a new burpsuite window to run the proxy.',
+                answer='Security testing of web applications',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=21,
+                title='Why use the IP address 127.0.0.1? \'Address is reserved for loopback purposes\' or \'Cheap costs and never used\'?',
+                description='Return to the interface website and open the browser settings on the top right-hand side, navigate to the bottom and open up the network settings. Select radio button “Manual proxy configuration” and add 127.0.0.1 with port 8080 and hit OK at the bottom.',
+                answer='Address is reserved for loopback purposes',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=22,
+                title='What is the intercept doing? \'Exploiting the website\' or \'Intercepting a request from the browser\'?',
+                description='Return back to the boardDataWW.php screen and alter the screen size so you can see both the interface and the burpsuite proxy window. On the burpsuite window, click the proxy tab on the top and underneath that the intercept tab, and ensure that “Intercept is on”.',
+                answer='Intercepting a request from the browser',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=23,
+                title='What is the content-type?',
+                description='On the browser window, type in a valid MAC address for the requirements (Ex: 112233445566) and hit submit. You should entice in the burpsuite window that the packets sent by the request were captured, appearing in the “Raw” window.',
+                answer='application/x-www-form-urlencoded',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=25,
+                title='What does the request line read (last line in the Raw window)?',
+                description='Click the “Forward” button near the intercept button, which will ensure the request goes through on the browser window and it will stop refreshing.',
+                answer='macAddress=112233445566&reigninfo=0&writeData=Submit',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=26,
+                title='What does the repeater allow us to do? \'Intercept a request\' or \'Modify a HTTP request and send it to the server\'?',
+                description='Right click on the raw request and click “Send to repeater”. Return back to the Proxy tab and click the intercept button to change it to “Intercept is off”.',
+                answer='Modify a HTTP request and send it to the server',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=27,
+                title='What error message appears in Raw Response window when you add a semicolon in the macAddress?',
+                description='Return to the repeater tab, where we can mess with the value of the macAddress and see what kind of responses we get in the Raw Response window. Add a colon anywhere in the macAddress or throughout the whole thing to make it an actual ‘valid’ address. Hit the “Send” button.',
+                answer='Invalid Data!',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=28,
+                title='What message appears now in the Raw Response Window?',
+                description='Change the macAddress line to read “macAddress=001122334455 -c; ls >> iot.txt #&reigninfo=0&writeData=Submit”. Hit the “Send” button.',
+                answer='Update Successful!',
+                lab_id=remote_lab.id
+            ),
+            Question(
+                id=29,
+                title='True/False: Executing \'cat /etc/passwd > file\' is a potential malicious command to try with these techniques?',
+                description='On the browser window, navigate to the URL iot.txt and view the command you were successfully able to execute remotely.',
+                answer='True',
+                lab_id=remote_lab.id
             )
             
         ]
