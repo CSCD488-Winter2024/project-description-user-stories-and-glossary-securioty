@@ -25,7 +25,8 @@ SecurIoTy strives to allow cybersecurity students and professionals the ability 
 0. Download Node.js here - [Node.js Download](https://nodejs.org/en/download)
 1. Clone this repository
 2. Open a terminal and navigate to where you cloned + "SecurIoTy\project-description-user-stories-and-glossary-securioty\securioty-webapp"
-3. Run "npm run dev" and navigate to the localhost url that is displayed to view the webapp
+3. Run "npm i" to download all necessary dependencies
+
 
 #### Back End Development
 0. Have the most recent version of Python3 installed.
@@ -37,18 +38,21 @@ SecurIoTy strives to allow cybersecurity students and professionals the ability 
 
 
 ## Functionality
-
-Currently our functionality does not extend past a basic UI.
+Our app currently has robust functionality in the following areas:
+* Students can create accounts, log in and logout. Instructors can create accounts with higher privileges with a special passphrase.
+* Users can access CTF style labs that are composed of instructions, questions and VM access
+* There are 2 hard-coded labs for users to attemp
+* Users can see what labs they’ve completed and see their progress on ones they’re working on
+* Instructors (or admins) can create and publish labs for others to complete
+* Instructors (or admins) can view the progress students have made on each lab
 
 
 ## Known Problems
-
-There are not any known problems at this early stage in development.
+* We currently don't have a way for users to edit account information or recover passwords
+* There is no filter for fields when creating an account
 
 
 ## Contributing
-
-TODO: Leave the steps below if you want others to contribute to your project.
 
 #### Back End Contributing
 - All backend development will be done in the form of modules, and will conform to the PEP-8 standards. 
@@ -76,3 +80,7 @@ More information can be found [here](https://docs.python.org/3/library/venv.html
   - FLASK_CONFIG needs to be set to 'testing' </br></br>
 - With the environment variables set you can simply run `flask run` in your terminal. The terminal will output which
 port is being used for testing.
+
+### Full Stack Testing
+- In order to have the frontend and backend working in tandem, firstly follow the above steps.
+- Additionally for the frontend, ensure you have followed the installation steps, then navigate to where you cloned + "SecurIoTy\project-description-user-stories-and-glossary-securioty\securioty-webapp" run "npm run dev" and navigate to the localhost url that is displayed to view the webapp
