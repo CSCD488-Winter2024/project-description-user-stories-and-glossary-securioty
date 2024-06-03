@@ -97,7 +97,7 @@ def setup_testing_data():
             Question(
                 id=6,
                 title='What was the password for the admin user?',
-                description='Run “hashcar -a 3 -m 1500 passwd –force”. -a 3 specifies a dictionary brute force hashing attack. -m 1500 specifies DES encryption was used to hash the passwords. Run the same command with “--show” at the end to show cracked passwords.',
+                description='Run “hashcat -a 3 -m 1500 passwd –force”. -a 3 specifies a dictionary brute force hashing attack. -m 1500 specifies DES encryption was used to hash the passwords. Run the same command with “--show” at the end to show cracked passwords.',
                 answer='1234',
                 lab_id=intro_lab.id
             ),
