@@ -75,5 +75,6 @@ This concludes the student section, however if you are an Instructor please view
 13. **Viewing Progress**:
     - Here we can see all users progress, which in this case is just one user who has 100%.
     
-    ![image](https://github.com/CSCD488-Winter2024/project-description-user-stories-and-glossary-securioty/assets/118641351/526379e7-a746-4d4e-a28b
+    ![image](https://github.com/CSCD488-Winter2024/project-description-user-stories-and-glossary-securioty/assets/118641351/526379e7-a746-4d4e-a28b-3ef420790e82)
 
+That concludes our User Guide. Have fun using SecurIoTy for your education needs!
