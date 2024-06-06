@@ -66,7 +66,7 @@ Our app currently has robust functionality in the following areas:
 - Pylint should not be ignored unless it is a special circumstance where there is no other way to solve the problem.
 
 #### Front End Contributing
-- This project is built with React + Typescript. All variables in the backend are typed to avoid errors.
+- This project is built with React + Typescript. All variables in the frontend are typed to avoid errors.
 - All frontend components were built with React fundamentals in mind.
 - For a refresher on how components are to be built, check out the React starting guide.(https://react.dev/learn)
 - Ensure that all hooks are located at the top of the page to follow React standards.
