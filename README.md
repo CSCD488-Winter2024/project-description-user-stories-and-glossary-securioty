@@ -49,8 +49,10 @@ Our app currently has robust functionality in the following areas:
 
 ## Known Problems
 * We currently don't have a way for users to edit account information or recover passwords
-* There is no filter for fields when creating an account
-
+* There is no filter or checks for fields when creating an account.
+* There is no current functionality for editing or deleting labs upon creation.
+* Currently there is no way to select a VM when creating a lab.
+* All instructors are assigned to all students and vise versa.
 
 ## Contributing
 
@@ -60,6 +62,12 @@ Our app currently has robust functionality in the following areas:
 - If you need to install a new pip package for your feature you must run pip freeze > requirements.txt to update requirements as needed. 
 - Proper documentation using [Google's Docstring Format](https://google.github.io/styleguide/pyguide.html) shall be used.
 - Pylint should not be ignored unless it is a special circumstance where there is no other way to solve the problem.
+
+#### Front End Contributing
+- This project is built with React + Typescript. All variables in the backend are typed to avoid errors.
+- All frontend components were built with React fundamentals in mind.
+- For a refresher on how components are to be built, check out the React starting guide.(https://react.dev/learn)
+- Ensure that all hooks are located at the top of the page to follow React standards.
 
 #### Pushing Changes
 1. Fork it!
