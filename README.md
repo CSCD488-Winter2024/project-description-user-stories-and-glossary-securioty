@@ -53,6 +53,8 @@ Our app currently has robust functionality in the following areas:
 * There is no current functionality for editing or deleting labs upon creation.
 * Currently there is no way to select a VM when creating a lab.
 * All instructors are assigned to all students and vise versa.
+* None of our code is deployed to a remote webserver, meaning it can only be run locally.
+* We were not able to setup VM's permanently and can only access them via local connection.
 
 ## Contributing
 
