@@ -70,6 +70,7 @@ Our app currently has robust functionality in the following areas:
 - All frontend components were built with React fundamentals in mind.
 - For a refresher on how components are to be built, check out the React starting guide.(https://react.dev/learn)
 - Ensure that all hooks are located at the top of the page to follow React standards.
+- Persistent state is achieved in our app via localStorage and useEffect hooks.
 
 #### Pushing Changes
 1. Fork it!
