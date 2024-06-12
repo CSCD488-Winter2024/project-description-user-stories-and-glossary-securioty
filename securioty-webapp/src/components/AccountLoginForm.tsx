@@ -43,9 +43,6 @@ const AccountLoginForm = ({
             lastname: response.data.last,
             role: response.data.role,
           });
-          console.log(account);
-          console.log(response.data.first);
-          console.log(response.data.access_token);
         }
       })
       .catch(function (error) {
@@ -58,7 +55,7 @@ const AccountLoginForm = ({
     if (
       registrationStatus &&
       account.role != "STUDENT" &&
-      secretPhrase != "chickenpizza"
+      secretPhrase != "spring2024"
     ) {
       alert("Incorrect phrase");
       return;
