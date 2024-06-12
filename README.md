@@ -65,6 +65,14 @@ Our app currently has robust functionality in the following areas:
 - Proper documentation using [Google's Docstring Format](https://google.github.io/styleguide/pyguide.html) shall be used.
 - Pylint should not be ignored unless it is a special circumstance where there is no other way to solve the problem.
 
+#### Back End File Structure
+- The backend file structure follows standard Flaks application best practices.
+- In the root directory you will find requirements.txt which outlines each pip requirement. run.py and config.py are the entry points where you can define environment variables and database integration
+- Inside the app directory is where all the "sub modules" are found. extensions.py exists as a nice place to put all outside library intialization in so there isn't any circular dependencies within the submodules. init creates the flask app with the defined environment variables in config.py. This is where the testing environment gets initialized.
+- tests contain basic unit tests for the routes.
+- auth contains the user data model, as well as logic to handle logging in and registering. JWT tokens are passed to the front end upon login.
+- test contains the lab data models. This is where labs can be created, deleted, modified, interacted with etc.
+
 #### Front End Contributing
 - This project is built with React + Typescript. All variables in the frontend are typed to avoid errors.
 - All frontend components were built with React fundamentals in mind.
