@@ -92,6 +92,11 @@ More information can be found [here](https://docs.python.org/3/library/venv.html
 - With the environment variables set you can simply run `flask run` in your terminal. The terminal will output which
 port is being used for testing.
 
+### Backend Deployment
+- Everything in the backend is setup to utilize environment variables to accomplish a cloud hosting option.
+- To deploy the Flask app all you will need to do is navigate to config.py in the app directory to see which variables need to be set, and what they do.
+- SQL alchemy also has a very convinent migrate function to help setup the database tables once everything is plugged in properly. You can read more about that [here](https://flask-migrate.readthedocs.io/en/latest/)
+
 ### Full Stack Testing
 - In order to have the frontend and backend working in tandem, firstly follow the above steps.
 - Additionally for the frontend, ensure you have followed the installation steps, then navigate to where you cloned + "SecurIoTy\project-description-user-stories-and-glossary-securioty\securioty-webapp" run "npm run dev" and navigate to the localhost url that is displayed to view the webapp
